@@ -82,7 +82,7 @@ def fields_view(**params):
     ################################################################
     with st.spinner(r"Fit williams from $\sigma_11$"):
         curve, K = tuto.extract_stress(
-            model, theta=0, r_fit=params['h2'], **params)
+            model, theta=0, r_fit=.2, **params)
         r = curve[:, 0]
         sigma = curve[:, 1]
         st.markdown(f"# Found Stress Intensity Factor $K={K}$")
@@ -92,6 +92,21 @@ def fields_view(**params):
                      label=f'Williams $K^I = {K}$')
             axe.set_xlabel(r'$\quad[m]$')
             axe.set_ylabel(r'$\sigma_{rr}\quad[Pa]$')
+            axe.legend(loc='best')
+
+    ################################################################
+    with st.spinner(r"Fit williams from $\sigma_11$ loglog"):
+        curve, K = tuto.extract_stress(
+            model, theta=0, r_fit=.2, **params)
+        r = curve[:, 0]
+        sigma = curve[:, 1]
+        st.markdown(f"# Found Stress Intensity Factor $K={K}$")
+        with make_figure() as (fig, axe):
+            axe.loglog(r, sigma, '-', label='FE')
+            axe.loglog(r, K/np.sqrt(r*2*np.pi), '--',
+                     label=f'Williams $K^I = {K}$')
+            axe.set_xlabel(r'log$\quad[m]$')
+            axe.set_ylabel(r'log$\sigma_{rr}\quad[Pa]$')
             axe.legend(loc='best')
 
     ################################################################
@@ -107,6 +122,21 @@ def fields_view(**params):
                      label=f'Williams ($K^I = {K}$)')
             axe.set_xlabel(r'$\quad[m]$')
             axe.set_ylabel(r'$\sigma_{\theta\theta}\quad[Pa]$')
+            axe.legend(loc='best')
+    
+    ################################################################
+    with st.spinner(r"Fit williams from $\sigma_22$ loglog"):
+        curve, K = tuto.extract_stress(
+            model, theta=0, r_fit=.2, shear=True, **params)
+        st.markdown(f"# Found Stress Intensity Factor $K={K}$")
+        r = curve[:, 0]
+        sigma = curve[:, 1]
+        with make_figure() as (fig, axe):
+            axe.loglog(r, sigma, '-', label='FE')
+            axe.loglog(r, K/np.sqrt(r*2*np.pi), '--',
+                     label=f'Williams ($K^I = {K}$)')
+            axe.set_xlabel(r'log$\quad[m]$')
+            axe.set_ylabel(r'log$\sigma_{\theta\theta}\quad[Pa]$')
             axe.legend(loc='best')
 
 
