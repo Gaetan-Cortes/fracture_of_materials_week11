@@ -196,6 +196,7 @@ def plotResult(model, displacement=None, field=None,
 
 def extract_stress(model, theta=0, angle_threshold=1e-1,
                    l=None, shear=False, **params):
+    r_fit = params.get('r_fit', 0.2)
     mesh = model.getMesh()
     quad_coords = aka.ElementTypeMapArrayReal()
     quad_coords.initialize(mesh, nb_component=2)
