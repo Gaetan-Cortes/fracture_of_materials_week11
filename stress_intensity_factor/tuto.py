@@ -194,9 +194,8 @@ def plotResult(model, displacement=None, field=None,
     return fig
 
 
-def extract_stress(model, theta=0, r_fit=1, angle_threshold=1e-1,
+def extract_stress(model, theta=0, angle_threshold=1e-1,
                    l=None, shear=False, **params):
-    r_fit = params.get('r_fit', r_fit)
     mesh = model.getMesh()
     quad_coords = aka.ElementTypeMapArrayReal()
     quad_coords.initialize(mesh, nb_component=2)
@@ -243,6 +242,6 @@ def extract_stress(model, theta=0, r_fit=1, angle_threshold=1e-1,
 def full_study_extract_K(**params):
     model, mesh = createModel(**params)
     plotMesh(mesh, displacement=model.getDisplacement())
-    curve, K = extract_stress(model, theta=0, r_fit=.2, shear=True, **params)
+    curve, K = extract_stress(model, theta=0, shear=True, **params)
     epot = model.getEnergy('potential')
     return K, epot
