@@ -114,7 +114,7 @@ def fields_view(**params):
     ################################################################
     with st.spinner(r"Fit williams from $\sigma_22$"):
         curve, K = tuto.extract_stress(
-            model, theta=0, r_fit=.2, shear=True, **params)
+            model, theta=0, shear=True, **params)
         st.markdown(f"# Found Stress Intensity Factor $K={K}$")
         r = curve[:, 0]
         sigma = curve[:, 1]
@@ -129,7 +129,7 @@ def fields_view(**params):
     ################################################################
     with st.spinner(r"Fit williams from $\sigma_22$ loglog"):
         curve, K = tuto.extract_stress(
-            model, theta=0, r_fit=.2, shear=True, **params)
+            model, theta=0, shear=True, **params)
         st.markdown(f"# Found Stress Intensity Factor $K={K}$")
         r = curve[:, 0]
         sigma = curve[:, 1]
