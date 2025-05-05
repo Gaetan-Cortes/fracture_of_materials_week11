@@ -11,21 +11,22 @@ from scipy.optimize import curve_fit
 plt.rcParams['figure.figsize'] = [5, 5]
 
 
-def createMesh(l=1, L=10, h1=0.05, h2=.5, quiet=False):
+def createMesh(l=1, L=10, h1=0.05, h2=.5, W=20, quiet=False):
 
     geometry_file = f"""
 h1 = {h1};
 h2 = {h2};
 L = {L};
 l = {l};
+W = {W};
 Point(1) = {{0, 0, 0, h2}};
-Point(2) = {{2*L, 0, 0, h2}};
-Point(3) = {{2*L, L, 0, h2}};
+Point(2) = {{W, 0, 0, h2}};
+Point(3) = {{W, L, 0, h2}};
 Point(4) = {{0, L, 0, h2}};
 Point(5) = {{l, 0, 0, h1}};
 
 Point(6) =  {{0, 0, 0, h2}};
-Point(7) =  {{2*L, -L, 0, h2}};
+Point(7) =  {{W, -L, 0, h2}};
 Point(8) =  {{0, -L, 0, h2}};
 
 
@@ -74,9 +75,9 @@ Physical Line("right") = {{4,9}};
 ################################################################
 
 
-def createModel(l=1, L=10, h1=0.05, h2=.5, U=0.005, **kwargs):
+def createModel(l=1, L=10, h1=0.05, h2=.5, U=0.005, W=20, r_fit=0.2, **kwargs):
 
-    mesh = createMesh(l=l, L=L, h1=h1, h2=h2, **kwargs)
+    mesh = createMesh(l=l, L=L, h1=h1, h2=h2, W=W, **kwargs)
 
     material_file = """
 material elastic [
@@ -195,6 +196,7 @@ def plotResult(model, displacement=None, field=None,
 
 def extract_stress(model, theta=0, r_fit=1, angle_threshold=1e-1,
                    l=None, shear=False, **params):
+    r_fit = params.get('r_fit', r_fit)
     mesh = model.getMesh()
     quad_coords = aka.ElementTypeMapArrayReal()
     quad_coords.initialize(mesh, nb_component=2)

@@ -15,10 +15,12 @@ dirname = os.path.dirname(__file__)
 
 params = {
     'L': 10,
+    'W': 20,
     'l': 10,
     'h1': .05,
     'h2': .5,
     'U': .1,
+    'r_fit': .2,
 }
 col1, col2 = st.columns(2)
 
@@ -150,10 +152,12 @@ def variations_view(**params):
     for l in tqdm(np.arange(1, 10), init_text="Varying crack length"):
         params = {
             'L': 10,
+            'W': 20,
             'l': l,
             'h1': .0005,
             'h2': .2,
             'U': .1,
+            'r_fit': .2,
         }
         K, epot = tuto.full_study_extract_K(quiet=True, **params)
 
@@ -181,10 +185,12 @@ def variations_view(**params):
                    init_text="Varying refinement"):
         params = {
             'L': 10,
+            'W': 20,
             'l': 10,
             'h1': h1,
             'h2': .2,
             'U': .1,
+            'r_fit': .2,
         }
         K, epot = tuto.full_study_extract_K(quiet=True, **params)
         res.append((h1, K))
