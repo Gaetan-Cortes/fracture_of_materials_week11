@@ -17,7 +17,7 @@ tabs = st.tabs(sub_apps)
 
 with tabs[0]:
     st.markdown(
-        '## <center> CAS ETH in Seismic Evaluation and Retrofitting (CAS ETH SER)</center>',
+        '## <center> Fracture of Materials - Week 11</center>',
         unsafe_allow_html=True)
     st.markdown('''
     ### <center> Numerical Methods for Modeling Dynamic Fracture of Materials, Introduction to the FE software Akantu, Applications of Akantu to Civil Engineering </center>''', unsafe_allow_html=True)
